@@ -3,7 +3,6 @@ using Monospad.Core.Models.Messages;
 using TagKid.Framework.IoC;
 using TagKid.Framework.IoC.Castle;
 using TagKid.Framework.Validation;
-using TagKid.Framework.WebApi;
 
 namespace Monospad.Core.Bootstrapping
 {
@@ -19,8 +18,6 @@ namespace Monospad.Core.Bootstrapping
                 new ServiceBootstrapper());
 
             ValidationManager.LoadValidatorsFromAssemblyOf<SigninRequestValidator>();
-
-            WebApi.Init();
         }
 
         public static void Bootstrap(params IBootstrapper[] bootstrappers)

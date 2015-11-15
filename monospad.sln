@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monospad.Web", "Monospad.We
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monospad.Core", "Monospad.Core\Monospad.Core.csproj", "{AA719852-1BE3-48E1-A660-8D5C8213B2FF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monospad.Owin.SelfHost", "Monospad.Owin.SelfHost\Monospad.Owin.SelfHost.csproj", "{8648647A-168F-4903-AFBC-2A505C48641D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monospad.Owin.Web", "Monospad.Owin.Web\Monospad.Owin.Web.csproj", "{9A55C8F3-A083-45CC-B0A3-5A73A514A73C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{AA719852-1BE3-48E1-A660-8D5C8213B2FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA719852-1BE3-48E1-A660-8D5C8213B2FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA719852-1BE3-48E1-A660-8D5C8213B2FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8648647A-168F-4903-AFBC-2A505C48641D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8648647A-168F-4903-AFBC-2A505C48641D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8648647A-168F-4903-AFBC-2A505C48641D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8648647A-168F-4903-AFBC-2A505C48641D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A55C8F3-A083-45CC-B0A3-5A73A514A73C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A55C8F3-A083-45CC-B0A3-5A73A514A73C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A55C8F3-A083-45CC-B0A3-5A73A514A73C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A55C8F3-A083-45CC-B0A3-5A73A514A73C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

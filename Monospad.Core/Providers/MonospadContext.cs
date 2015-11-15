@@ -23,6 +23,8 @@ namespace Monospad.Core.Providers
             }
         }
 
-        public User User { get; set; }
+        public User User => Login.User;
+
+        public Login Login { get; set; }
     }
 }

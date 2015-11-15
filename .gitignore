@@ -224,3 +224,4 @@ pip-log.txt
 
 Web*.config
 deploy
+deploy-owin

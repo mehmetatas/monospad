@@ -1,0 +1,12 @@
+﻿<div class="authDialog">
+    <div class="auth-form">
+        reset password
+        <br>
+        <br>
+        <input type="password" ng-model="newPassword" ng-enter="resetPassword()" placeholder="new password"/>
+        <br>
+        <br>
+        <a href ng-click="resetPassword()">submit</a>
+    </div>
+</div>
+<div ng-show="blocker.block" class="block"></div>

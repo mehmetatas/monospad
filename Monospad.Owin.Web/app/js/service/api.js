@@ -28,6 +28,12 @@
         };
         this.recoverPassword = function (data, success, error, complete) {
             monospad.post(controller, "recoverPassword", data, success, error, complete, true);
-        }; 
+        };
+        this.resetPassword = function (data, success, error, complete) {
+            monospad.post(controller, "resetPassword", data, success, error, complete, true);
+        };
+        this.changePassword = function (data, success, error, complete) {
+            monospad.post(controller, "changePassword", data, success, error, complete, true);
+        };
     }
 ]);

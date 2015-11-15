@@ -2,8 +2,9 @@
 using Monospad.Core.Models.Database;
 using Monospad.Core.Models.Messages;
 using Monospad.Core.Providers;
+using TagKid.Framework.Hosting;
 using TagKid.Framework.UnitOfWork;
-using TagKid.Framework.WebApi;
+using TagKid.Framework.Owin;
 
 namespace Monospad.Core.Services.Impl
 {

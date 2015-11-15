@@ -5,8 +5,9 @@ using Monospad.Core.Exceptions;
 using Monospad.Core.Models.Database;
 using Monospad.Core.Models.Messages;
 using Monospad.Core.Providers;
+using TagKid.Framework.Hosting;
 using TagKid.Framework.UnitOfWork;
-using TagKid.Framework.WebApi;
+using TagKid.Framework.Owin;
 
 namespace Monospad.Core.Services.Impl
 {
@@ -81,7 +82,7 @@ namespace Monospad.Core.Services.Impl
             if (login?.ExpireDate > DateTime.UtcNow)
             {
                 // Extend login
-                login.ExpireDate = DateTime.UtcNow.AddDays(30);
+                login.ExpireDate = DateTime.UtcNow.AddDays(Constants.LoginTokenValidDays);
 
                 _repository.Update(login);
             }
@@ -118,7 +119,7 @@ namespace Monospad.Core.Services.Impl
             }
             
             // Extend login
-            login.ExpireDate = DateTime.UtcNow.AddDays(30);
+            login.ExpireDate = DateTime.UtcNow.AddDays(Constants.LoginTokenValidDays);
 
             _repository.Update(login);
             
@@ -175,6 +176,55 @@ namespace Monospad.Core.Services.Impl
             return Response.Success;
         }
 
+        public Response ResetPassword(ResetPasswordRequest request)
+        {
+            var login = _repository.Select<Login>()
+                .Join(l => l.User)
+                .FirstOrDefault(l => l.Token == request.Token);
+
+            if (login == null || !login.IsPasswordRecovery)
+            {
+                throw Errors.User_InvalidPasswordRecoveryToken;
+            }
+
+            if (login.ExpireDate < DateTime.UtcNow)
+            {
+                throw Errors.User_PasswordRecoveryTokenExpired;
+            }
+
+            login.ExpireDate = DateTime.UtcNow;
+            login.User.Password = _crypto.ComputeHash(request.NewPassword);
+
+            _repository.Update(login);
+            _repository.Update(login.User);
+
+            login = CreateLogin(login.User);
+            
+            return Response.Success.WithData(new
+            {
+                login.Token
+            });
+        }
+
+        public Response ChangePassword(ChangePasswordRequest request)
+        {
+            var user = MonospadContext.Current.User;
+            var login = MonospadContext.Current.Login;
+
+            user.Password = _crypto.ComputeHash(request.NewPassword);
+            _repository.Update(user);
+
+            login.ExpireDate = DateTime.UtcNow;
+            _repository.Update(login);
+
+            login = CreateLogin(user);
+
+            return Response.Success.WithData(new
+            {
+                login.Token
+            });
+        }
+
         private Login CreateLogin(User user, bool recovery = false)
         {
             var login = new Login
@@ -182,7 +232,7 @@ namespace Monospad.Core.Services.Impl
                 User = user,
                 Token = Guid.NewGuid(),
                 IsPasswordRecovery = recovery,
-                ExpireDate = DateTime.UtcNow.AddDays(recovery ? 3 : 30)
+                ExpireDate = DateTime.UtcNow.AddDays(recovery ? Constants.PasswordRecoveryValidDays : Constants.LoginTokenValidDays)
             };
 
             _repository.Insert(login);

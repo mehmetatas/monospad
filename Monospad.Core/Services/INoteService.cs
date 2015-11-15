@@ -1,5 +1,6 @@
 ﻿using Monospad.Core.Models.Messages;
-using TagKid.Framework.WebApi;
+using TagKid.Framework.Hosting;
+using TagKid.Framework.Owin;
 
 namespace Monospad.Core.Services
 {

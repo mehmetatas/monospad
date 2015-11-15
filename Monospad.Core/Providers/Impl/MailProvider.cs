@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Monospad.Core.Providers.Impl
 {
-    public class MailProvider: IMailProvider
+    public class MailProvider : IMailProvider
     {
         private readonly Queue<Mail> _mailQueue;
         private volatile bool _running;
@@ -20,21 +21,26 @@ namespace Monospad.Core.Providers.Impl
         {
             lock (this)
             {
+                var link = $"http://monospad.com/recover/{token}";
                 _mailQueue.Enqueue(new Mail
                 {
                     ToAddress = email,
                     Subject = "recover your password",
-                    Body = @"hi,
+                    Body = $@"<html><head></head>
+<body style='font-family: ""Consolas"", ""Courier New""'>
+hi,</p>
 
-we have just received a request telling that you want to recover your password and prepared a unique link for you immediately. 
+<p>we have just received a request telling that you want to recover your password and prepared a unique <a href=""{link}"" target=_blank>link</a> for you immediately.</p>
 
-you can simply click it or paste it into your browser: http://monospad.com/recover/{token}. 
+<p>you can simply click it or paste it into your browser: {link} </p>
 
-if you do not use this link your password will remain the same. 
+<p>if you do not use this link your password will remain the same.</p>
 
-the link will be valid for next 3 days.
+<p>the link will be valid for next {Constants.PasswordRecoveryValidDays} days.</p>
 
-"
+<p>regards,<br>
+monospad.com</p>
+</body></html>"
                 });
 
                 EnsureRunning();
@@ -82,7 +88,14 @@ the link will be valid for next 3 days.
                 return;
             }
 
-            Send(mail);
+            try
+            {
+                Send(mail);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         private void Send(Mail mail)
@@ -90,9 +103,15 @@ the link will be valid for next 3 days.
             var msg = new MailMessage
             {
                 Body = mail.Body,
-                Subject = mail.Subject
+                Subject = mail.Subject,
+                IsBodyHtml = true
             };
             msg.To.Add(mail.ToAddress);
+
+            using (var sc = new SmtpClient())
+            {
+                sc.Send(msg);
+            }
         }
 
         class Mail

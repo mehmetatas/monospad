@@ -22,13 +22,13 @@ namespace Monospad.Core
 
                 if (i > 0)
                 {
-                    note.Title = content.Substring(0, Math.Min(i, 40));
-                    note.Summary = content.Substring(i, Math.Min(content.Length - i, 150));
+                    note.Title = content.Substring(0, Math.Min(i, Constants.TitleLength));
+                    note.Summary = content.Substring(i, Math.Min(content.Length - i, Constants.SummaryLength));
                 }
                 else
                 {
-                    note.Title = content.Substring(0, Math.Min(content.Length, 40));
-                    note.Summary = content.Substring(0, Math.Min(content.Length, 150));
+                    note.Title = content.Substring(0, Math.Min(content.Length, Constants.TitleLength));
+                    note.Summary = content.Substring(0, Math.Min(content.Length, Constants.SummaryLength));
                 }
             }
 

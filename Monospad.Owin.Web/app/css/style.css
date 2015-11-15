@@ -19,7 +19,7 @@ html, body {
     margin: 0;
     padding: 0;
     color: #333;
-    font-family: "Consolas", "Courier New";
+    font-family: 'Consolas', 'Courier New';
     font-weight: 400;
     font-size: 1em;
 }
@@ -30,7 +30,7 @@ a, a:hover, a:visited {
 }
 
 .app {
-    min-width: 800px;
+    min-width: 500px;
     height: 100%;
 }
 
@@ -63,18 +63,18 @@ a, a:hover, a:visited {
         height: 40px;
         border-bottom: solid 1px;
     }
-
-        .content .menu .left {
-            display: inline-block;
-            width: calc(100% - 200px);
-        }
-
+    
         .content .menu .right {
             display: inline-block;
-            width: 200px;
             padding: 10px;
             float: right;
             text-align: right;
+        }
+    
+        .content .menu .left {
+            display: inline-block;
+            padding: 10px;
+            float: left;
         }
 
 .search {
@@ -98,7 +98,7 @@ a, a:hover, a:visited {
     border: none;
     font: inherit;
     padding: 5px;
-    font-size: 1.2em;
+    font-size: 1em;
 }
 
 .notes {

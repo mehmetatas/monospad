@@ -46,10 +46,11 @@ angular.module("monospad").controller("appCtrl", ["$scope", "$rootScope", "$time
 
     var processAuthSuccess = function (resp) {
         $scope.loggedin = true;
+        $scope.searchKey = "";
         $scope.authMode = 0;
         $scope.notes = resp.Data.Notes;
         if ($scope.current && $scope.current.Content) {
-            $scope.current.Content = $scope.notes[0].Content;
+            $scope.current = $scope.notes[0];
             $scope.current.selected = true;
         }
         clientData.token(resp.Data.Token);
@@ -59,6 +60,7 @@ angular.module("monospad").controller("appCtrl", ["$scope", "$rootScope", "$time
     var ensureSignedOut = function () {
         console.log("ensureSignedOut");
         $scope.loggedin = false;
+        $scope.searchKey = "";
         clientData.token(null);
         $scope.notes = [];
         $scope.current = null;
@@ -102,8 +104,8 @@ angular.module("monospad").controller("appCtrl", ["$scope", "$rootScope", "$time
         var req = {
             Email: $scope.signinInfo.Email
         };
-        
-        user.recoverPassword(req, function() {
+
+        user.recoverPassword(req, function () {
             alert("a password recovery mail has sent to your email address: " + $scope.signinInfo.Email);
             ensureSignedOut();
         });
@@ -124,6 +126,12 @@ angular.module("monospad").controller("appCtrl", ["$scope", "$rootScope", "$time
     };
 
     $scope.loadNote = function (n) {
+        if (n.selected) {
+            n.selected = false;
+            $scope.current = null;
+            return;
+        }
+
         if ($scope.current) {
             $scope.current.selected = false;
         }
@@ -144,7 +152,7 @@ angular.module("monospad").controller("appCtrl", ["$scope", "$rootScope", "$time
     };
 
     $scope.deleteNote = function (n) {
-        if (!confirm("are you sure you want to delete '" + n.Title + "'?")) {
+        if (n.Title && !confirm("are you sure you want to delete '" + n.Title + "'?")) {
             return;
         }
 

@@ -1,7 +1,8 @@
-﻿using TagKid.Framework.IoC;
+﻿using TagKid.Framework.Hosting;
+using TagKid.Framework.IoC;
 using TagKid.Framework.UnitOfWork;
-using TagKid.Framework.WebApi;
-using TagKid.Framework.WebApi.Configuration;
+using TagKid.Framework.Owin;
+using TagKid.Framework.Owin.Configuration;
 
 namespace Monospad.Core.Services.Interceptors
 {

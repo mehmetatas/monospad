@@ -27,11 +27,11 @@
     <div class="content">
         <div class="menu">
             <div class="left">
-
+                <a href class="new" ng-click="newNote()" ng-show="loggedin">new</a>
             </div>
             <div class="right">
-                <span ng-show="loggedin" >
-                    <a href ng-click="newNote()">new</a>
+                <span ng-show="loggedin">
+                    <a href ng-click="showChangePassword=true">change password</a>
                     |
                     <a href ng-click="signout()">sign out</a>
                 </span>
@@ -54,9 +54,20 @@
                 |
                 <a href ng-click="authMode=3" ng-class="{'active':authMode==3}">forgot password</a>
             </div>
-            <input type="email" placeholder="email" ng-enter="auth()" maxlength="100" ng-model="signinInfo.Email"/>
-            <input type="password" placeholder="password" ng-enter="auth()" maxlength="20" ng-hide="authMode==3" ng-model="signinInfo.Password"/>
+            <input type="email" placeholder="email" ng-enter="auth()" maxlength="100" ng-model="signinInfo.Email" />
+            <input type="password" placeholder="password" ng-enter="auth()" maxlength="20" ng-hide="authMode==3" ng-model="signinInfo.Password" />
             <a href ng-click="auth()">submit</a>
+        </div>
+    </div>
+    <div class="authDialog" ng-esc="showChangePassword=false" ng-show="showChangePassword">
+        <div class="auth-form">
+            change password
+            <br>
+            <br>
+            <input type="password" ng-model="newPassword" ng-enter="changePassword()" placeholder="new password" />
+            <br>
+            <br>
+            <a href ng-click="changePassword()">submit</a>
         </div>
     </div>
     <div ng-show="blocker.block" class="block"></div>

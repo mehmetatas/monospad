@@ -1,6 +1,6 @@
 using Monospad.Core.Providers;
 using TagKid.Framework.Exceptions;
-using TagKid.Framework.WebApi;
+using TagKid.Framework.Hosting;
 
 namespace Monospad.Core.Services.Interceptors
 {

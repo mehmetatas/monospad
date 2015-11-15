@@ -1,5 +1,6 @@
+using TagKid.Framework.Hosting;
 using TagKid.Framework.Validation;
-using TagKid.Framework.WebApi;
+using TagKid.Framework.Owin;
 
 namespace Monospad.Core.Services.Interceptors
 {

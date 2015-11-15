@@ -3,13 +3,14 @@ using Monospad.Core.Providers.Impl;
 using Monospad.Core.Services;
 using Monospad.Core.Services.Impl;
 using Monospad.Core.Services.Interceptors;
+using TagKid.Framework.Hosting;
+using TagKid.Framework.Hosting.Impl;
+using TagKid.Framework.Hosting.Owin;
 using TagKid.Framework.IoC;
 using TagKid.Framework.Json;
 using TagKid.Framework.Json.Newtonsoft;
 using TagKid.Framework.UnitOfWork;
 using TagKid.Framework.UnitOfWork.Impl;
-using TagKid.Framework.WebApi;
-using TagKid.Framework.WebApi.Impl;
 
 namespace Monospad.Core.Bootstrapping.Bootstrappers
 {
@@ -18,11 +19,12 @@ namespace Monospad.Core.Bootstrapping.Bootstrappers
         public void Bootstrap(IDependencyContainer container)
         {
             // Framework "er"s
+            container.RegisterSingleton<IHttpRequestHandler, HttpRequestHandler>();
             container.RegisterSingleton<IJsonSerializer, NewtonsoftJsonSerializer>();
             container.RegisterSingleton<IRouteResolver, RouteResolver>();
             container.RegisterSingleton<IParameterResolver, ParameterResolver>();
             container.RegisterSingleton<IActionInvoker, ActionInvoker>();
-            container.RegisterSingleton<IHttpHandler, HttpHandler>();
+            container.RegisterSingleton<IOwinHandler, GenericOwinHandler>();
 
             // Database
             container.RegisterTransient<IUnitOfWork, UnitOfWork>();

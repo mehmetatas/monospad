@@ -22,6 +22,11 @@ angular.module("monospad").config([
                 url: "/",
                 templateUrl: basepath("app.html"),
                 controller: "appCtrl"
+            })
+            .state("recover", {
+                url: "/recover/:token",
+                templateUrl: basepath("recover.html"),
+                controller: "recoverCtrl"
             });
     }
 ]);

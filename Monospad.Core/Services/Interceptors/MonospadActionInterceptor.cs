@@ -1,4 +1,5 @@
-﻿using TagKid.Framework.WebApi;
+﻿using System.Linq;
+using TagKid.Framework.Hosting;
 
 namespace Monospad.Core.Services.Interceptors
 {
@@ -26,7 +27,7 @@ namespace Monospad.Core.Services.Interceptors
 
         public void AfterCall(RouteContext ctx)
         {
-            foreach (var interceptor in _interceptors)
+            foreach (var interceptor in _interceptors.Reverse())
             {
                 interceptor.AfterCall(ctx);
             }
@@ -34,7 +35,7 @@ namespace Monospad.Core.Services.Interceptors
 
         public object OnException(RouteContext ctx)
         {
-            foreach (var interceptor in _interceptors)
+            foreach (var interceptor in _interceptors.Reverse())
             {
                 var res = interceptor.OnException(ctx);
                 if (res != null)
@@ -47,7 +48,7 @@ namespace Monospad.Core.Services.Interceptors
 
         public void Dispose()
         {
-            foreach (var interceptor in _interceptors)
+            foreach (var interceptor in _interceptors.Reverse())
             {
                 interceptor.Dispose();
             }

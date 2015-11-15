@@ -33,16 +33,28 @@ namespace Monospad.Core.Models.Messages
         public string Email { get; set; }
     }
 
+    public class ResetPasswordRequest
+    {
+        public Guid Token { get; set; }
+        public string NewPassword { get; set; }
+    }
+
+    public class ChangePasswordRequest
+    {
+        public string NewPassword { get; set; }
+    }
+    
     public class SigninRequestValidator : Validator<SigninRequest>
     {
         protected override void BuildRules()
         {
             RuleFor(r => r.Email)
-                .Email(Errors.Validation_InvalidEmailAddress);
+                .Email(Errors.Validation_InvalidEmailAddress)
+                .Length(Errors.Validation_EmailTooLong0.WithArgs(Constants.MaxEmailLength), 1, Constants.MaxEmailLength);
 
             RuleFor(r => r.Password)
-                .NotEmpty(Errors.Validation_InvalidPassword)
-                .Length(Errors.Validation_InvalidPassword, 4, 20);
+                .NotEmpty(Errors.Validation_InvalidPasswordLength01.WithArgs(Constants.MinPasswordLength, Constants.MaxPasswordLength))
+                .Length(Errors.Validation_InvalidPasswordLength01.WithArgs(Constants.MinPasswordLength, Constants.MaxPasswordLength), Constants.MinPasswordLength, Constants.MaxPasswordLength);
         }
     }
 
@@ -51,11 +63,12 @@ namespace Monospad.Core.Models.Messages
         protected override void BuildRules()
         {
             RuleFor(r => r.Email)
-                .Email(Errors.Validation_InvalidEmailAddress);
+                .Email(Errors.Validation_InvalidEmailAddress)
+                .Length(Errors.Validation_EmailTooLong0.WithArgs(Constants.MaxEmailLength), 1, Constants.MaxEmailLength);
 
             RuleFor(r => r.Password)
-                .NotEmpty(Errors.Validation_InvalidPassword)
-                .Length(Errors.Validation_InvalidPassword, 4, 20);
+                .NotEmpty(Errors.Validation_InvalidPasswordLength01.WithArgs(Constants.MinPasswordLength, Constants.MaxPasswordLength))
+                .Length(Errors.Validation_InvalidPasswordLength01.WithArgs(Constants.MinPasswordLength, Constants.MaxPasswordLength), Constants.MinPasswordLength, Constants.MaxPasswordLength);
         }
     }
 
@@ -64,7 +77,28 @@ namespace Monospad.Core.Models.Messages
         protected override void BuildRules()
         {
             RuleFor(r => r.Email)
-                .Email(Errors.Validation_InvalidEmailAddress);
+                .Email(Errors.Validation_InvalidEmailAddress)
+                .Length(Errors.Validation_EmailTooLong0.WithArgs(Constants.MaxEmailLength), 1, Constants.MaxEmailLength);
+        }
+    }
+
+    public class ResetPasswordRequestValidator : Validator<ResetPasswordRequest>
+    {
+        protected override void BuildRules()
+        {
+            RuleFor(r => r.NewPassword)
+               .NotEmpty(Errors.Validation_InvalidPasswordLength01.WithArgs(Constants.MinPasswordLength, Constants.MaxPasswordLength))
+               .Length(Errors.Validation_InvalidPasswordLength01.WithArgs(Constants.MinPasswordLength, Constants.MaxPasswordLength), Constants.MinPasswordLength, Constants.MaxPasswordLength);
+        }
+    }
+
+    public class ChangePasswordRequestValidator : Validator<ChangePasswordRequest>
+    {
+        protected override void BuildRules()
+        {
+            RuleFor(r => r.NewPassword)
+               .NotEmpty(Errors.Validation_InvalidPasswordLength01.WithArgs(Constants.MinPasswordLength, Constants.MaxPasswordLength))
+               .Length(Errors.Validation_InvalidPasswordLength01.WithArgs(Constants.MinPasswordLength, Constants.MaxPasswordLength), Constants.MinPasswordLength, Constants.MaxPasswordLength);
         }
     }
 }

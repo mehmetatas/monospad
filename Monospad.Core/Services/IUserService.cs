@@ -1,5 +1,5 @@
 ﻿using Monospad.Core.Models.Messages;
-using TagKid.Framework.WebApi;
+using TagKid.Framework.Hosting;
 
 namespace Monospad.Core.Services
 {
@@ -10,5 +10,7 @@ namespace Monospad.Core.Services
         Response SigninWithToken(SigninWithTokenRequest request);
         Response Signout(SignoutRequest request);
         Response RecoverPassword(RecoverPasswordRequest request);
+        Response ResetPassword(ResetPasswordRequest request);
+        Response ChangePassword(ChangePasswordRequest request);
     }
 }

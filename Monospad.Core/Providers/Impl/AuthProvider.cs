@@ -1,11 +1,9 @@
 ﻿using DummyOrm.Db;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Monospad.Core.Exceptions;
 using Monospad.Core.Models.Database;
+using TagKid.Framework.Hosting;
 using TagKid.Framework.UnitOfWork;
-using TagKid.Framework.WebApi;
 
 namespace Monospad.Core.Providers.Impl
 {
@@ -24,16 +22,11 @@ namespace Monospad.Core.Providers.Impl
             {
                 return;
             }
+            
+            var authToken = ctx.HttpRequest.GetHeader("monospad-auth-token");
 
-            var tokenGuid = Guid.Empty;
-
-            IEnumerable<string> headerValues;
-
-            if (ctx.Request.Headers.TryGetValues("monospad-auth-token", out headerValues))
-            {
-                var authToken = headerValues.FirstOrDefault();
-                Guid.TryParse(authToken, out tokenGuid);
-            }
+            Guid tokenGuid;
+            Guid.TryParse(authToken, out tokenGuid);
 
             if (tokenGuid == Guid.Empty)
             {
@@ -54,7 +47,7 @@ namespace Monospad.Core.Providers.Impl
                 throw Errors.Auth_LoginTokenExpired;
             }
 
-            MonospadContext.Current.User = login.User;
+            MonospadContext.Current.Login = login;
         }
     }
 }

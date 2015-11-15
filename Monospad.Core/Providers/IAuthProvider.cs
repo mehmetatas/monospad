@@ -1,4 +1,4 @@
-﻿using TagKid.Framework.WebApi;
+﻿using TagKid.Framework.Hosting;
 
 namespace Monospad.Core.Providers
 {
