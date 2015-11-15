@@ -79,8 +79,27 @@
       <Name>Monospad.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="www\" />
+    <Content Include="www\app\css\style.css" />
+    <Content Include="www\app\html\app.html" />
+    <Content Include="www\app\html\recover.html" />
+    <Content Include="www\app\js\app.js" />
+    <Content Include="www\app\js\app.routes.js" />
+    <Content Include="www\app\js\ctrl\appCtrl.js" />
+    <Content Include="www\app\js\ctrl\recoverCtrl.js" />
+    <Content Include="www\app\js\directive\ngEnter.js" />
+    <Content Include="www\app\js\service\api.js" />
+    <Content Include="www\app\js\service\app.html" />
+    <Content Include="www\app\js\service\appCtrl.js" />
+    <Content Include="www\app\js\service\clientData.js" />
+    <Content Include="www\app\js\service\monospad.js" />
+    <Content Include="www\app\js\service\ngEnter.js" />
+    <Content Include="www\app\js\service\style.css" />
+    <Content Include="www\app\lib\angular\angular-ui-router.min.js" />
+    <Content Include="www\app\lib\angular\angular.min.js" />
+    <Content Include="www\app\lib\angular\ngStorage.min.js" />
+    <Content Include="www\index.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

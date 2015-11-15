@@ -57,8 +57,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app\html\recover.html" />
-    <Content Include="app\js\ctrl\recoverCtrl.js" />
     <Content Include="packages.config" />
     <None Include="Properties\PublishProfiles\deploy.pubxml" />
     <None Include="Web.Debug.config">
@@ -70,23 +68,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
-    <Content Include="app\css\style.css" />
-    <Content Include="app\html\app.html" />
-    <Content Include="app\js\app.js" />
-    <Content Include="app\js\app.routes.js" />
-    <Content Include="app\js\ctrl\appCtrl.js" />
-    <Content Include="app\js\directive\ngEnter.js" />
-    <Content Include="app\js\service\api.js" />
-    <Content Include="app\js\service\app.html" />
-    <Content Include="app\js\service\appCtrl.js" />
-    <Content Include="app\js\service\clientData.js" />
-    <Content Include="app\js\service\monospad.js" />
-    <Content Include="app\js\service\ngEnter.js" />
-    <Content Include="app\js\service\style.css" />
-    <Content Include="app\lib\angular\angular-ui-router.min.js" />
-    <Content Include="app\lib\angular\angular.min.js" />
-    <Content Include="app\lib\angular\ngStorage.min.js" />
-    <Content Include="index.html" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

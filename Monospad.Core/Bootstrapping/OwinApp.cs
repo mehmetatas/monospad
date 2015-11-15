@@ -65,7 +65,7 @@ namespace Monospad.Core.Bootstrapping
                 builder.Run(handler.HandleRequestAsync);
             });
 
-            app.Use<OwinSpaMiddleware>();
+            app.Use<OwinSpaMiddleware>("www\\index.html");
         }
     }
 }
