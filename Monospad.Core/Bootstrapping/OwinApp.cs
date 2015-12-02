@@ -53,7 +53,8 @@ namespace Monospad.Core.Bootstrapping
                         {
                             {".css", "text/css"},
                             {".html", "text/html"},
-                            {".js", "application/javascript"}
+                            {".js", "application/javascript"},
+                            {".json", "application/json"}
                         })
                 }
             };

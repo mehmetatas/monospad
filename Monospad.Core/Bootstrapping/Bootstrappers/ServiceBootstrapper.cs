@@ -22,6 +22,7 @@ namespace Monospad.Core.Bootstrapping.Bootstrappers
             builder.ControllerFor<INoteService>("note")
                 .ActionFor(s => s.SaveNote(default(SaveNoteRequest)), "save", HttpMethod.Post)
                 .ActionFor(s => s.GetContent(default(GetContentRequest)), "getContent", HttpMethod.Get)
+                .ActionFor(s => s.GetNote(default(GetNoteRequest)), "getNote", HttpMethod.Get)
                 .ActionFor(s => s.DeleteNote(default(DeleteNoteRequest)), "delete", HttpMethod.Post);
         }
 

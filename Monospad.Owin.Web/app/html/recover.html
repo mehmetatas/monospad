@@ -1,0 +1,32 @@
+<div class="app">
+	<div class="header">
+		<div class="hide-mobile">
+			<div class="title">
+				<a href="http://monospad.com">monospad.com</a>
+			</div>
+		</div>
+		<div class="show-mobile">
+			<div class="left">
+			</div>
+			<div class="center">
+				monospad
+			</div>
+			<div class="right">
+			</div>
+		</div>
+	</div>
+	<div class="content">
+		<div class="recover-content">
+			<span class="recover-title">reset password</span>
+			<br>
+			<br>
+			<div class="recover-form">
+				<input type="password" ng-model="newPassword" ng-enter="resetPassword()" maxlength="16" placeholder="new password"/>
+				<br>
+				<br>
+				<a href ng-click="resetPassword()">submit</a>
+			</div>
+		</div>
+	</div>
+</div>
+<div ng-show="blocker.block" class="block"></div>

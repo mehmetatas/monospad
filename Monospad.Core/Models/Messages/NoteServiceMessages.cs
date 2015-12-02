@@ -16,8 +16,8 @@
         public long Id { get; set; }
     }
 
-    public class SearchNotesRequest
+    public class GetNoteRequest
     {
-        public string Key { get; set; }
+        public long Id { get; set; }
     }
 }

@@ -4,7 +4,6 @@ using Monospad.Core.Models.Messages;
 using Monospad.Core.Providers;
 using TagKid.Framework.Hosting;
 using TagKid.Framework.UnitOfWork;
-using TagKid.Framework.Owin;
 
 namespace Monospad.Core.Services.Impl
 {
@@ -48,6 +47,15 @@ namespace Monospad.Core.Services.Impl
             var note = _repository.SaveNote(request.Content, MonospadContext.Current.User, request.Id);
 
             return Response.Success.WithData(note.ToItem());
+        }
+
+        public Response GetNote(GetNoteRequest request)
+        {
+            var note = _repository.Select<Note>()
+                .Include(n => new { n.Title, n.Content })
+                .FirstOrDefault(n => n.Id == request.Id && n.User.Id == MonospadContext.Current.User.Id);
+
+            return Response.Success.WithData(note);
         }
     }
 }

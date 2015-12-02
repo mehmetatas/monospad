@@ -1,6 +1,5 @@
 ﻿using Monospad.Core.Models.Messages;
 using TagKid.Framework.Hosting;
-using TagKid.Framework.Owin;
 
 namespace Monospad.Core.Services
 {
@@ -9,5 +8,6 @@ namespace Monospad.Core.Services
         Response DeleteNote(DeleteNoteRequest request);
         Response SaveNote(SaveNoteRequest request);
         Response GetContent(GetContentRequest request);
+        Response GetNote(GetNoteRequest request);
     }
 }
