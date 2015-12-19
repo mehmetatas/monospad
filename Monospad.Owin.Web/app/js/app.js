@@ -186,7 +186,7 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                         }
 
                         curr.saved = true;
-                        $timeout(function() {
+                        $timeout(function () {
                             curr.saved = false;
                         }, 2000);
 
@@ -379,6 +379,52 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
             signinWithToken();
 
             // Editor
+
+            var downTimeout;
+            document.getElementById("editor").addEventListener("mousedown", function (e) {
+                downTimeout = $timeout(function () {
+                    var txt = e.target;
+
+                    var start = txt.selectionStart;
+                    var end = txt.selectionEnd;
+
+                    if (start !== end) {
+                        return;
+                    }
+
+                    var val = txt.value;
+
+                    while (start > -1 &&
+                        val.charAt(start) !== " " &&
+                        val.charAt(start) !== "\n" &&
+                        val.charAt(start) !== "\r" &&
+                        val.charAt(start) !== "\t") {
+                        start--;
+                    }
+
+                    while (end < val.length &&
+                        val.charAt(end) !== " " &&
+                        val.charAt(end) !== "\n" &&
+                        val.charAt(end) !== "\r" &&
+                        val.charAt(end) !== "\t") {
+                        end++;
+                    }
+
+                    var text = val.substring(start + 1, end);
+
+                    if (text.indexOf("http://") === 0 ||
+                        text.indexOf("https://") === 0) {
+                        window.open(text);
+                    }
+                }, 1000);
+            });
+
+            document.getElementById("editor").addEventListener("mouseup", function (e) {
+                if (downTimeout) {
+                    $timeout.cancel(downTimeout);
+                    downTimeout = null;
+                }
+            });
 
             document.getElementById("editor").addEventListener("keydown", function (e) {
                 var keyCode = e.keyCode || e.which;
