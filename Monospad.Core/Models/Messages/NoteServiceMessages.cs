@@ -1,4 +1,6 @@
-﻿namespace Monospad.Core.Models.Messages
+﻿using System;
+
+namespace Monospad.Core.Models.Messages
 {
     public class DeleteNoteRequest
     {
@@ -16,8 +18,8 @@
         public long Id { get; set; }
     }
 
-    public class GetNoteRequest
+    public class GetNoteByAccessCodeRequest
     {
-        public long Id { get; set; }
+        public Guid AccessCode { get; set; }
     }
 }

@@ -48,5 +48,17 @@ namespace Monospad.Core.Services.Impl
 
             return Response.Success.WithData(note.ToItem());
         }
+
+        public Response GetNoteByAccessCode(GetNoteByAccessCodeRequest request)
+        {
+            var note = _repository.Select<Note>()
+                .Include(n => n.Content)
+                .FirstOrDefault(n => n.AccessToken == request.AccessCode);
+
+            return Response.Success.WithData(new
+            {
+                note.Content
+            });
+        }
     }
 }

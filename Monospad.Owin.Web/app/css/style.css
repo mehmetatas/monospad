@@ -29,6 +29,7 @@ html, body {
 a, a:hover, a:visited {
     text-decoration: none;
     color: #333;
+    cursor: pointer;
 }
 
 #blocker {
@@ -55,6 +56,10 @@ a, a:hover, a:visited {
     width: 100%;
 }
 
+    .header a {
+        color: #fff;
+    }
+
     .header > .hide-mobile > .title {
         display: inline-block;
         padding: 5px;
@@ -62,10 +67,6 @@ a, a:hover, a:visited {
         color: #fff;
         width: 200px;
     }
-
-        .header > .hide-mobile > .title > a {
-            color: #fff;
-        }
 
     .header > .hide-mobile > .search-box {
         display: inline-block;
@@ -161,10 +162,7 @@ textarea {
 }
 
 .note {
-    -ms-border-radius: 5px;
     border-radius: 5px;
-    -webkit-box-shadow: 0 0 5px #888;
-    -ms-box-shadow: 0 0 5px #888;
     box-shadow: 0 0 5px #888;
     background-color: #fff;
     margin: 10px;
@@ -193,6 +191,12 @@ textarea {
             overflow-x: hidden;
         }
 
+        .note > .note-info > .note-footer {
+            margin-top: 10px;
+            text-align: right;
+            z-index: 10;
+        }
+
         .note > .note-info > .note-summary {
             color: #999;
             max-height: 40px;
@@ -200,14 +204,8 @@ textarea {
             overflow: hidden;
         }
 
-
     .note.selected > .note-info > .note-summary {
         color: #444;
-    }
-
-    .note > .note-footer {
-        margin-top: 10px;
-        text-align: right;
     }
 
 .content {
@@ -267,8 +265,8 @@ textarea {
             top: 0;
             left: 100%;
             right: 0;
-            padding: 10px;
             -ms-border-radius: 10px;
+            padding: 10px;
         }
 
         .content > .content-inner.content-open {
@@ -282,6 +280,12 @@ textarea {
     text-decoration: none;
     cursor: pointer;
     color: #8394a9;
+}
+
+.note-content {
+    width: 100%;
+    height: calc(100% - 40px);
+    padding: 10px;
 }
 
 .no-csstransforms3d .content > .content-inner.content-open {
@@ -341,8 +345,8 @@ textarea {
     padding: 20px;
 }
 
-    .auth-form > input ,
-	.recover-form  > input {
+    .auth-form > input,
+    .recover-form > input {
         width: 100%;
         margin-bottom: 10px;
         border: solid 1px #ddd;
@@ -359,9 +363,9 @@ textarea {
             font-size: 1.1em;
             font-weight: 600;
         }
-      
+
 .recover-content {
-	text-align: center;
+    text-align: center;
     margin-top: 100px;
 }
 
@@ -376,13 +380,13 @@ textarea {
     -ms-box-shadow: 0 0 5px #888;
     box-shadow: 0 0 5px #888;
     padding: 20px;
-	margin-left: auto;
-	margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .recover-title {
-	font-size: 1.2em;
-	font-weight: 600;
+    font-size: 1.2em;
+    font-weight: 600;
 }
 
 @media only screen and (min-width: 768px) {
@@ -413,8 +417,8 @@ textarea {
         width: 100%;
         margin-top: 50px;
     }
-      
-	.recover-content {
-		margin-top: 50px;
-	}
+
+    .recover-content {
+        margin-top: 50px;
+    }
 }

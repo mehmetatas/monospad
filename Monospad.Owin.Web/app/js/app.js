@@ -133,7 +133,7 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                 };
 
                 block(
-                    api.user.recoverPassword(req, function() {
+                    api.user.recoverPassword(req, function () {
                         alert("a password recovery mail has sent to your email address: " + $scope.signinInfo.Email);
                         ensureSignedOut();
                     })
@@ -271,7 +271,7 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                 }
 
                 block(
-                    api.note.getContent({ Id: n.Id }, function(resp) {
+                    api.note.getContent({ Id: n.Id }, function (resp) {
                         n.Content = resp.Data.Content;
                         skipSave = true;
                         $scope.current = n;
@@ -285,7 +285,7 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                 }
 
                 block(
-                    api.note.deleteNote({ Id: n.Id }, function() {
+                    api.note.deleteNote({ Id: n.Id }, function () {
                         var i = $scope.notes.indexOf(n);
 
                         if (i > -1) {
@@ -298,6 +298,10 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                         }
                     }, ensureAuth)
                 );
+            };
+
+            $scope.shareNote = function (n) {
+                prompt("share url", "https://monospad.com/note/" + n.AccessToken);
             };
 
             $scope.$watch("current.Content", function () {
@@ -344,7 +348,7 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                 block(
                     api.user.changePassword({
                         NewPassword: $scope.newPassword
-                    }, function(resp) {
+                    }, function (resp) {
                         $scope.newPassword = "";
                         $scope.showChangePassword = false;
                         clientData.token(resp.Data.Token);
@@ -359,10 +363,10 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                 }
 
                 block(
-                    api.user.signinWithToken({ Token: clientData.token() }, function(resp) {
+                    api.user.signinWithToken({ Token: clientData.token() }, function (resp) {
                         $scope.loggedin = true;
                         $scope.notes = resp.Data.Notes;
-                    }, function(resp) {
+                    }, function (resp) {
                         clientData.token(null);
                         console.log(resp.ResponseCode + ":" + resp.ResponseMessage);
                     })
@@ -449,12 +453,12 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
 	.controller("recoverCtrl", ["$scope", "$rootScope", "$location", "$routeParams", "api", "clientData", "block", function ($scope, $rootScope, $location, $routeParams, api, clientData, block) {
 	    $rootScope.blocker = {};
 
-        block(
-            $scope.resetPassword = function() {
+	    block(
+            $scope.resetPassword = function () {
                 api.user.resetPassword({
                     Token: $routeParams.token,
                     NewPassword: $scope.newPassword
-                }, function(resp) {
+                }, function (resp) {
                     clientData.token(resp.Data.Token);
                     $location.url("/");
                 });
@@ -466,8 +470,13 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
 	.controller("noteCtrl", ["$scope", "$rootScope", "$location", "$routeParams", "api", "clientData", "block", function ($scope, $rootScope, $location, $routeParams, api, clientData, block) {
 	    $rootScope.blocker = {};
 
-	    alert($routeParams.token);
-    }])
+	    block(
+            api.note.getNoteByAccessCode({ AccessCode: $routeParams.token },
+                function (resp) {
+                    $scope.content = resp.Data.Content;
+                })
+        );
+	}])
     .directive("ngEnter", function () {
         return function (scope, element, attrs) {
             element.bind("keydown keypress", function (event) {
@@ -492,6 +501,18 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                     event.preventDefault();
                 }
             });
+        };
+    })
+    .directive("a", function () {
+        return {
+            restrict: "E",
+            link: function (scope, elem, attrs) {
+                if (attrs.ngClick || attrs.href === "" || attrs.href === "#") {
+                    elem.on("click", function (e) {
+                        e.preventDefault();
+                    });
+                }
+            }
         };
     })
     .factory("block", ["$rootScope", function ($rootScope) {

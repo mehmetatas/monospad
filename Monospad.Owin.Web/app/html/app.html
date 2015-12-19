@@ -2,7 +2,7 @@
     <div class="header">
         <div class="hide-mobile">
             <div class="title">
-                <a href="http://monospad.com">monospad.com</a>
+                <a href="https://monospad.com">monospad.com</a>
             </div>
 
             <div class="search-box">
@@ -11,31 +11,31 @@
 
             <div class="menu">
                 <div class="left">
-                    <a href class="btn btn-header" ng-click="newNote()" ng-show="loggedin">new</a>
+                    <a class="btn btn-header" ng-click="newNote()" ng-show="loggedin">new</a>
                 </div>
                 <div class="right clearfix">
                     <span ng-show="loggedin">
-                        <a href class="btn btn-header" ng-click="showChangePassword=true">change password</a>
+                        <a class="btn btn-header" ng-click="showChangePassword=true">change password</a>
                         <span class="btn-header">|</span>
-                        <a href class="btn btn-header" ng-click="signout()">sign out</a>
+                        <a class="btn btn-header" ng-click="signout()">sign out</a>
                     </span>
-                    <a href class="btn btn-header" ng-hide="loggedin" ng-click="authMode=1">sign up</a>
+                    <a class="btn btn-header" ng-hide="loggedin" ng-click="authMode=1">sign up</a>
                 </div>
             </div>
         </div>
         <div class="show-mobile">
             <div class="left">
                 <div class="content-back">
-                    <a href class="btn btn-header" ng-show="showContentPanel" ng-click="backToList()">&lt; list</a>
-                    <a href class="btn btn-header" ng-show="!showContentPanel && loggedin" ng-click="signout()">sign out</a>
+                    <a class="btn btn-header" ng-show="showContentPanel" ng-click="backToList()">&lt; list</a>
+                    <a class="btn btn-header" ng-show="!showContentPanel && loggedin" ng-click="signout()">sign out</a>
                 </div>
             </div>
             <div class="center">
                 monospad
             </div>
             <div class="right">
-                <a href class="btn btn-header" ng-hide="loggedin" ng-click="authMode=1">sign up</a>
-                <a href class="btn btn-header" ng-click="newNote()" ng-show="loggedin">new +</a>
+                <a class="btn btn-header" ng-hide="loggedin" ng-click="authMode=1">sign up</a>
+                <a class="btn btn-header" ng-click="newNote()" ng-show="loggedin">new +</a>
             </div>
         </div>
     </div>
@@ -45,20 +45,20 @@
                 <div class="no-notes" ng-hide="notes.length">
                     no notes
                     <br /><br /><br />
-                    <a href ng-click="authMode=1" ng-show="!loggedin && current.Content.length > 10">sign up to save your notes</a>
+                    <a ng-click="authMode=1" ng-show="!loggedin && current.Content.length > 10">sign up to save your notes</a>
                 </div>
                 <div class="show-mobile" ng-show="notes.length && loggedin">
                     <input class="mobile-search" type="text" placeholder="search title" ng-model="searchKey" />
                 </div>
                 <div class="note" ng-repeat="note in notes | filter: {Title:searchKey}" ng-class="{'selected':note.selected}">
-                    <a class="note-info" ng-click="loadNote(note)">
+                    <div class="note-info" ng-click="loadNote(note)">
                         <span class="note-title" ng-bind="note.Title || '[empty]'"></span>
                         <div class="note-summary" ng-bind="note.Summary"></div>
-                    </a>
-                    <div class="note-footer">
-                        <a ng-href="/note/{{note.AccessToken}}" class="btn">share</a>
-
-                        <a href class="btn" ng-click="deleteNote(note)">delete</a>
+                        <div class="note-footer">
+                            <a class="btn" ng-click="shareNote(note); $event.stopPropagation();">share</a>
+                            |
+                            <a class="btn" ng-click="deleteNote(note); $event.stopPropagation();">delete</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -70,30 +70,30 @@
 </div>
 <div class="authDialog" ng-esc="authMode=0" ng-show="authMode > 0">
     <div class="auth-form">
-        <a href class="close" ng-click="authMode=0">x</a>
+        <a class="close" ng-click="authMode=0">x</a>
         <div class="clearfix"></div>
         <div class="buttons">
-            <a href ng-click="authMode=1" ng-class="{'active':authMode==1}">sign up</a>
+            <a ng-click="authMode=1" ng-class="{'active':authMode==1}">sign up</a>
             |
-            <a href ng-click="authMode=2" ng-class="{'active':authMode==2}">log in</a>
+            <a ng-click="authMode=2" ng-class="{'active':authMode==2}">log in</a>
             |
-            <a href ng-click="authMode=3" ng-class="{'active':authMode==3}">forgot password</a>
+            <a ng-click="authMode=3" ng-class="{'active':authMode==3}">forgot password</a>
         </div>
         <input type="email" placeholder="email" ng-enter="auth()" maxlength="100" ng-model="signinInfo.Email" />
         <input type="password" placeholder="password" ng-enter="auth()" maxlength="20" ng-hide="authMode==3" ng-model="signinInfo.Password" />
-        <a href ng-click="auth()">submit</a>
+        <a ng-click="auth()">submit</a>
     </div>
 </div>
 <div class="authDialog" ng-esc="showChangePassword=false" ng-show="showChangePassword">
     <div class="auth-form">
-        <a href class="close" ng-click="showChangePassword=false">x</a>
+        <a class="close" ng-click="showChangePassword=false">x</a>
         change password
         <br>
         <br>
         <input type="password" ng-model="newPassword" ng-enter="changePassword()" placeholder="new password" />
         <br>
         <br>
-        <a href ng-click="changePassword()">submit</a>
+        <a ng-click="changePassword()">submit</a>
     </div>
 </div>
 <div id="blocker" ng-show="blocker.block"></div>
