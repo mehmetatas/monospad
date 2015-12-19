@@ -204,6 +204,8 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                 return $window.innerWidth < 768;
             };
 
+            var isMobileDevice = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
             // Common
 
             $scope.toggleContentPanel = function (state) {
@@ -380,53 +382,114 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
 
             // Editor
 
+            var editor = document.getElementById("editor");
+
             var downTimeout;
-            document.getElementById("editor").addEventListener("mousedown", function (e) {
+            var touchStartTime;
+
+            var getUrl = function (txt) {
+                var start = txt.selectionStart;
+                var end = txt.selectionEnd;
+
+                if (start !== end) {
+                    if (isMobileDevice) {
+                        end = start;
+                    } else {
+                        return null;
+                    }
+                }
+
+                var val = txt.value;
+
+                while (start > -1 &&
+                    val.charAt(start) !== " " &&
+                    val.charAt(start) !== "\n" &&
+                    val.charAt(start) !== "\r" &&
+                    val.charAt(start) !== "\t") {
+                    start--;
+                }
+
+                while (end < val.length &&
+                    val.charAt(end) !== " " &&
+                    val.charAt(end) !== "\n" &&
+                    val.charAt(end) !== "\r" &&
+                    val.charAt(end) !== "\t") {
+                    end++;
+                }
+
+                var text = val.substring(start + 1, end);
+
+                if (text.indexOf("http://") === 0 ||
+                    text.indexOf("https://") === 0) {
+                    return text;
+                }
+
+                return null;
+            };
+
+            var handleMouseDown = function () {
                 downTimeout = $timeout(function () {
-                    var txt = e.target;
+                    var url = getUrl(editor);
 
-                    var start = txt.selectionStart;
-                    var end = txt.selectionEnd;
-
-                    if (start !== end) {
-                        return;
-                    }
-
-                    var val = txt.value;
-
-                    while (start > -1 &&
-                        val.charAt(start) !== " " &&
-                        val.charAt(start) !== "\n" &&
-                        val.charAt(start) !== "\r" &&
-                        val.charAt(start) !== "\t") {
-                        start--;
-                    }
-
-                    while (end < val.length &&
-                        val.charAt(end) !== " " &&
-                        val.charAt(end) !== "\n" &&
-                        val.charAt(end) !== "\r" &&
-                        val.charAt(end) !== "\t") {
-                        end++;
-                    }
-
-                    var text = val.substring(start + 1, end);
-
-                    if (text.indexOf("http://") === 0 ||
-                        text.indexOf("https://") === 0) {
-                        window.open(text);
+                    if (url) {
+                        window.open(url);
                     }
                 }, 1000);
-            });
+            };
 
-            document.getElementById("editor").addEventListener("mouseup", function (e) {
+            var handleMouseUp = function () {
                 if (downTimeout) {
                     $timeout.cancel(downTimeout);
                     downTimeout = null;
                 }
-            });
+            };
 
-            document.getElementById("editor").addEventListener("keydown", function (e) {
+            var clickHandler = function () {
+                var url = getUrl(editor);
+
+                if (!url) {
+                    return;
+                }
+
+                var a = document.createElement("a");
+                a.setAttribute("href", url);
+                a.setAttribute("target", "_blank");
+
+                var dispatch = document.createEvent("HTMLEvents");
+                dispatch.initEvent("click", true, true);
+                a.dispatchEvent(dispatch);
+
+                //editor.removeEventListener("click", clickHandler);
+            };
+
+            //var handleTouchStart = function () {
+            //    touchStartTime = new Date();
+            //};
+
+            //var handleTouchEnd = function () {
+            //    var touchDuration = new Date() - touchStartTime;
+
+            //    if (touchDuration < 1000) {
+            //        return;
+            //    }
+
+            //    editor.addEventListener("click", clickHandler);
+
+            //    var dispatch = document.createEvent("HTMLEvents");
+            //    dispatch.initEvent("click", true, true);
+            //    editor.dispatchEvent(dispatch);
+            //};
+
+            if (isMobileDevice) {
+                //editor.addEventListener("touchstart", handleTouchStart);
+                //editor.addEventListener("touchend", handleTouchEnd);
+                editor.addEventListener("click", clickHandler);
+            } else {
+                editor.addEventListener("mousedown", handleMouseDown);
+                editor.addEventListener("mouseup", handleMouseUp);
+            }
+
+            editor.addEventListener("keydown", function (e) {
                 var keyCode = e.keyCode || e.which;
 
                 if (keyCode !== 9) {

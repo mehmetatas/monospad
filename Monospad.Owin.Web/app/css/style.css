@@ -297,7 +297,7 @@ textarea {
     .saved.visible {
         opacity: 1;
     }
-    
+
 .content > .content-inner.content-open {
     -webkit-transform: translate3d(-100%, 0, 0);
     transform: translate3d(-100%, 0, 0);
