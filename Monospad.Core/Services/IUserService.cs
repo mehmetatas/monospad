@@ -16,10 +16,9 @@ namespace Monospad.Core.Services
         Response SigninWithToken(SigninWithTokenRequest request);
 
         [NoAuth]
-        Response Signout(SignoutRequest request);
-
-        [NoAuth]
         Response RecoverPassword(RecoverPasswordRequest request);
+        
+        Response Signout(SignoutRequest request);
 
         Response ResetPassword(ResetPasswordRequest request);
 

@@ -13,7 +13,8 @@ namespace Monospad.Core
                 Id = id,
                 User = user,
                 Content = (content ?? string.Empty).Trim(),
-                LastUpdateDate = DateTime.UtcNow
+                LastUpdateDate = DateTime.UtcNow,
+                AccessToken = Guid.NewGuid()
             };
 
             if (!string.IsNullOrEmpty(content))
@@ -53,7 +54,8 @@ namespace Monospad.Core
             {
                 note.Id,
                 note.Title,
-                note.Summary
+                note.Summary,
+                note.AccessToken
             };
         }
     }

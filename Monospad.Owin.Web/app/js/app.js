@@ -1,22 +1,26 @@
 angular.module("monospad", ["ngStorage", "ngRoute"])
-	.config(["$routeProvider", "$locationProvider", function($routeProvider, $locationProvider) {
-		$locationProvider.html5Mode(true);
-	
+	.config(["$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
+	    $locationProvider.html5Mode(true);
+
 	    $routeProvider
             .when("/", {
-				templateUrl: "/app/html/app.html",
-				controller: "appCtrl"
-			})
+                templateUrl: "/app/html/app.html",
+                controller: "appCtrl"
+            })
             .when("/recover/:token", {
-				templateUrl: "/app/html/recover.html",
-				controller: "recoverCtrl"
-			})
+                templateUrl: "/app/html/recover.html",
+                controller: "recoverCtrl"
+            })
+            .when("/note/:token", {
+                templateUrl: "/app/html/note.html",
+                controller: "noteCtrl"
+            })
             .otherwise({
-				redirectTo: "/"
-			});
+                redirectTo: "/"
+            });
 	}])
     .controller("appCtrl", [
-        "$scope", "$rootScope", "$timeout", "$window", "api", "clientData", function ($scope, $rootScope, $timeout, $window, api, clientData) {
+        "$scope", "$rootScope", "$timeout", "$window", "api", "clientData", "block", function ($scope, $rootScope, $timeout, $window, api, clientData, block) {
             var saveTimeout;
             var skipSave;
 
@@ -103,7 +107,9 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                     req.UnsavedNoteContent = $scope.current.Content;
                 }
 
-                api.user.signup(req, processAuthSuccess);
+                block(
+                    api.user.signup(req, processAuthSuccess)
+                );
             };
 
             var signin = function () {
@@ -116,7 +122,9 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                     req.UnsavedNoteContent = $scope.current.Content;
                 }
 
-                api.user.signin(req, processAuthSuccess);
+                block(
+                    api.user.signin(req, processAuthSuccess)
+                );
             };
 
             var recoverPassword = function () {
@@ -124,10 +132,12 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                     Email: $scope.signinInfo.Email
                 };
 
-                api.user.recoverPassword(req, function () {
-                    alert("a password recovery mail has sent to your email address: " + $scope.signinInfo.Email);
-                    ensureSignedOut();
-                });
+                block(
+                    api.user.recoverPassword(req, function() {
+                        alert("a password recovery mail has sent to your email address: " + $scope.signinInfo.Email);
+                        ensureSignedOut();
+                    })
+                );
             };
 
             var saveToServer = function () {
@@ -170,10 +180,10 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                         curr.Summary = data.Summary;
 
                         if ($scope.notes.indexOf(curr) < 0) {
-							if (!$scope.current) {
-								curr.selected = true;
-								$scope.current = curr;
-							}
+                            if (!$scope.current) {
+                                curr.selected = true;
+                                $scope.current = curr;
+                            }
                             $scope.notes.splice(0, 0, curr);
                         }
                     }, ensureAuth, function () {
@@ -233,7 +243,7 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                     $scope.current = { selected: true, Title: "" };
                     $scope.notes.splice(0, 0, $scope.current);
                 }
-				$scope.searchKey = "";
+                $scope.searchKey = "";
                 $scope.toggleContentPanel(true);
                 scrollDiv("noteList", 0, 250);
                 document.getElementById("editor").focus();
@@ -260,11 +270,13 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                     return;
                 }
 
-                api.note.getContent({ Id: n.Id }, function (resp) {
-                    n.Content = resp.Data.Content;
-                    skipSave = true;
-                    $scope.current = n;
-                }, ensureAuth);
+                block(
+                    api.note.getContent({ Id: n.Id }, function(resp) {
+                        n.Content = resp.Data.Content;
+                        skipSave = true;
+                        $scope.current = n;
+                    }, ensureAuth)
+                );
             };
 
             $scope.deleteNote = function (n) {
@@ -272,18 +284,20 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                     return;
                 }
 
-                api.note.deleteNote({ Id: n.Id }, function () {
-                    var i = $scope.notes.indexOf(n);
+                block(
+                    api.note.deleteNote({ Id: n.Id }, function() {
+                        var i = $scope.notes.indexOf(n);
 
-                    if (i > -1) {
-                        $scope.notes.splice(i, 1);
-                    }
+                        if (i > -1) {
+                            $scope.notes.splice(i, 1);
+                        }
 
-                    if (n === $scope.current) {
-                        skipSave = true;
-                        $scope.current = null;
-                    }
-                }, ensureAuth);
+                        if (n === $scope.current) {
+                            skipSave = true;
+                            $scope.current = null;
+                        }
+                    }, ensureAuth)
+                );
             };
 
             $scope.$watch("current.Content", function () {
@@ -321,18 +335,22 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                     return;
                 }
 
-                api.user.signout({ Token: clientData.token() }, null, null, ensureSignedOut);
+                block(
+                    api.user.signout({ Token: clientData.token() }, null, null, ensureSignedOut)
+                );
             };
 
             $scope.changePassword = function () {
-                api.user.changePassword({
-                    NewPassword: $scope.newPassword
-                }, function (resp) {
-					$scope.newPassword = "";
-                    $scope.showChangePassword = false;
-                    clientData.token(resp.Data.Token);
-                    alert("password changed!");
-                });
+                block(
+                    api.user.changePassword({
+                        NewPassword: $scope.newPassword
+                    }, function(resp) {
+                        $scope.newPassword = "";
+                        $scope.showChangePassword = false;
+                        clientData.token(resp.Data.Token);
+                        alert("password changed!");
+                    })
+                );
             };
 
             var signinWithToken = function () {
@@ -340,19 +358,21 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                     return;
                 }
 
-                api.user.signinWithToken({ Token: clientData.token() }, function (resp) {
-                    $scope.loggedin = true;
-                    $scope.notes = resp.Data.Notes;
-                }, function (resp) {
-                    clientData.token(null);
-                    console.log(resp.ResponseCode + ":" + resp.ResponseMessage);
-                });
+                block(
+                    api.user.signinWithToken({ Token: clientData.token() }, function(resp) {
+                        $scope.loggedin = true;
+                        $scope.notes = resp.Data.Notes;
+                    }, function(resp) {
+                        clientData.token(null);
+                        console.log(resp.ResponseCode + ":" + resp.ResponseMessage);
+                    })
+                );
             };
 
             signinWithToken();
 
             // Editor
-			
+
             document.getElementById("editor").addEventListener("keydown", function (e) {
                 var keyCode = e.keyCode || e.which;
 
@@ -361,86 +381,93 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                 }
 
                 e.preventDefault();
-				
+
                 var txt = e.target;
 
                 var start = txt.selectionStart;
                 var end = txt.selectionEnd;
-				
-				var val = txt.value;
-				
-				var newLine = "\n";
-				
-				var isMultilineSelection = val.substring(start, end).indexOf(newLine) > 0;
-				
-				if (!isMultilineSelection) {
-					txt.value = val.substring(0, start) + "    " + val.substring(end);
-					txt.selectionStart = txt.selectionEnd = start + 4;
-					return;
-				}
-				
-				var initialLineBreakIndex = -1;
-				var tmp = 0;
-				while (tmp < start) {
-					initialLineBreakIndex = tmp;
-					tmp = val.indexOf(newLine, tmp + 1);
-				}
-				
-				var lastLineBreakIndex = val.indexOf(newLine, end);
-				if (lastLineBreakIndex < 0) {
-					lastLineBreakIndex = val.length;
-				}
-				
-				var before = val.substring(0, initialLineBreakIndex + 1);
-				var selection =  val.substring(initialLineBreakIndex + 1, lastLineBreakIndex);
-				var after = val.substring(lastLineBreakIndex);
-				
-				var lines = selection.split(newLine);
-				selection = "";
-				for (var i = 0; i < lines.length; i++) {
-					if (e.shiftKey) {
-						if (lines[i].indexOf("    ") === 0) {
-							selection += lines[i].substring(4) + newLine;
-						}
-						else if (lines[i].indexOf("   ") === 0) {
-							selection += lines[i].substring(3) + newLine;
-						}
-						else if (lines[i].indexOf("  ") === 0) {
-							selection += lines[i].substring(2) + newLine;
-						}
-						else if (lines[i].indexOf(" ") === 0) {
-							selection += lines[i].substring(1) + newLine;
-						}
-						else {
-							selection += lines[i] + newLine;
-						}
-					} else {
-						selection += "    " + lines[i] + newLine;
-					}
-				}
-				selection = selection.substring(0, selection.length - 1);
-				
-				txt.value = before + selection + after;				
-				txt.selectionStart = initialLineBreakIndex + 1;
-				txt.selectionEnd = initialLineBreakIndex + selection.length + 1;
+
+                var val = txt.value;
+
+                var newLine = "\n";
+
+                var isMultilineSelection = val.substring(start, end).indexOf(newLine) > 0;
+
+                if (!isMultilineSelection) {
+                    txt.value = val.substring(0, start) + "    " + val.substring(end);
+                    txt.selectionStart = txt.selectionEnd = start + 4;
+                    return;
+                }
+
+                var initialLineBreakIndex = -1;
+                var tmp = 0;
+                while (tmp < start) {
+                    initialLineBreakIndex = tmp;
+                    tmp = val.indexOf(newLine, tmp + 1);
+                }
+
+                var lastLineBreakIndex = val.indexOf(newLine, end);
+                if (lastLineBreakIndex < 0) {
+                    lastLineBreakIndex = val.length;
+                }
+
+                var before = val.substring(0, initialLineBreakIndex + 1);
+                var selection = val.substring(initialLineBreakIndex + 1, lastLineBreakIndex);
+                var after = val.substring(lastLineBreakIndex);
+
+                var lines = selection.split(newLine);
+                selection = "";
+                for (var i = 0; i < lines.length; i++) {
+                    if (e.shiftKey) {
+                        if (lines[i].indexOf("    ") === 0) {
+                            selection += lines[i].substring(4) + newLine;
+                        }
+                        else if (lines[i].indexOf("   ") === 0) {
+                            selection += lines[i].substring(3) + newLine;
+                        }
+                        else if (lines[i].indexOf("  ") === 0) {
+                            selection += lines[i].substring(2) + newLine;
+                        }
+                        else if (lines[i].indexOf(" ") === 0) {
+                            selection += lines[i].substring(1) + newLine;
+                        }
+                        else {
+                            selection += lines[i] + newLine;
+                        }
+                    } else {
+                        selection += "    " + lines[i] + newLine;
+                    }
+                }
+                selection = selection.substring(0, selection.length - 1);
+
+                txt.value = before + selection + after;
+                txt.selectionStart = initialLineBreakIndex + 1;
+                txt.selectionEnd = initialLineBreakIndex + selection.length + 1;
             });
         }
     ])
-	.controller("recoverCtrl", ["$scope", "$rootScope", "$location", "$routeParams", "api", "clientData", function ($scope, $rootScope, $location, $routeParams, api, clientData) {
-		$rootScope.blocker = {};
+	.controller("recoverCtrl", ["$scope", "$rootScope", "$location", "$routeParams", "api", "clientData", "block", function ($scope, $rootScope, $location, $routeParams, api, clientData, block) {
+	    $rootScope.blocker = {};
 
-		$scope.resetPassword = function () {
-			api.user.resetPassword({
-				Token: $routeParams.token,
-				NewPassword: $scope.newPassword
-			}, function (resp) {
-				clientData.token(resp.Data.Token);
-				$location.url("/");
-			});
-		};
+        block(
+            $scope.resetPassword = function() {
+                api.user.resetPassword({
+                    Token: $routeParams.token,
+                    NewPassword: $scope.newPassword
+                }, function(resp) {
+                    clientData.token(resp.Data.Token);
+                    $location.url("/");
+                });
+            }
+        );
 
-		clientData.token(null);
+	    clientData.token(null);
 	}])
+	.controller("noteCtrl", ["$scope", "$rootScope", "$location", "$routeParams", "api", "clientData", "block", function ($scope, $rootScope, $location, $routeParams, api, clientData, block) {
+	    $rootScope.blocker = {};
+
+	    alert($routeParams.token);
+    }])
     .directive("ngEnter", function () {
         return function (scope, element, attrs) {
             element.bind("keydown keypress", function (event) {
@@ -467,6 +494,14 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
             });
         };
     })
+    .factory("block", ["$rootScope", function ($rootScope) {
+        return function (promise) {
+            $rootScope.blocker.block = true;
+            promise.finally(function () {
+                $rootScope.blocker.block = false;
+            });
+        };
+    }])
     .service("api", [
         "$rootScope", "$http", "clientData", function ($rootScope, $http, clientData) {
             var send = function (method, controller, action, data, success, error, complete) {
@@ -532,7 +567,7 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
 
                             service[methodName] = (function (p, m) {
                                 return function (data, success, error, complete) {
-                                    send(p, serviceName, m, data, success, error, complete);
+                                    return send(p, serviceName, m, data, success, error, complete);
                                 };
                             })(prop, methodName);
                         }

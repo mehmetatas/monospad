@@ -9,6 +9,7 @@ namespace Monospad.Core.Models.Database
         public string Title { get; set; }
         public string Summary { get; set; }
         public string Content { get; set; }
+        public Guid AccessToken { get; set; }
         public DateTime LastUpdateDate { get; set; }
     }
 }

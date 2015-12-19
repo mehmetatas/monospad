@@ -244,7 +244,7 @@ namespace Monospad.Core.Services.Impl
             _repository.DeleteMany<Note>(n => n.User.Id == userId && n.Title == null);
 
             return _repository.Select<Note>()
-                .Include(n => new { n.Id, n.Title, n.Summary })
+                .Include(n => new { n.Id, n.Title, n.Summary, n.AccessToken })
                 .Where(n => n.User.Id == userId)
                 .OrderByDesc(n => n.LastUpdateDate)
                 .ToList();

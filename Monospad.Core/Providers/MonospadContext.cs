@@ -14,11 +14,11 @@ namespace Monospad.Core.Providers
             get
             {
                 // TODO: Make sure consistency and thread safety of CallContext
-                var ctx = CallContext.GetData("MonospadContext") as MonospadContext;
+                var ctx = CallContext.LogicalGetData("MonospadContext") as MonospadContext;
                 if (ctx == null)
                 {
                     ctx = new MonospadContext();
-                    CallContext.SetData("MonospadContext", ctx);
+                    CallContext.LogicalSetData("MonospadContext", ctx);
                 }
                 return ctx;
             }

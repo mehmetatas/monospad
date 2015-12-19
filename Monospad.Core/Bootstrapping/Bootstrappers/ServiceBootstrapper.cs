@@ -44,12 +44,13 @@ namespace Monospad.Core.Bootstrapping.Bootstrappers
             return method.GetCustomAttribute<NoAuthAttribute>() != null;
         }
 
-        private string ToCamelCase(string name)
+        private static string ToCamelCase(string name)
         {
             return char.ToLowerInvariant(name[0]) + name.Substring(1);
         }
     }
 
+    [AttributeUsage(AttributeTargets.Method)]
     public class NoAuthAttribute : Attribute
     {
 

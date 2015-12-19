@@ -61,6 +61,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="app\html\app.html" />
+    <Content Include="app\html\note.html" />
     <Content Include="app\html\recover.html" />
     <Content Include="app\js\app.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
