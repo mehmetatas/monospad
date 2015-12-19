@@ -265,14 +265,43 @@ textarea {
             top: 0;
             left: 100%;
             right: 0;
-            -ms-border-radius: 10px;
+            border-radius: 10px;
             padding: 10px;
         }
 
-        .content > .content-inner.content-open {
-            -webkit-transform: translate3d(-100%, 0, 0);
-            transform: translate3d(-100%, 0, 0);
-        }
+
+.saved {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 100px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: 600;
+    background-color: #319fe9;
+    -webkit-box-shadow: 0 0 5px #08f;
+    -ms-box-shadow: 0 0 5px #08f;
+    box-shadow: 0 0 5px #08f;
+    z-index: 10;
+    opacity: 0;
+    -webkit-transition: all .5s ease-in-out;
+    -moz-transition: all .5s ease-in-out;
+    -ms-transition: all .5s ease-in-out;
+    -o-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+}
+
+    .saved.visible {
+        opacity: 1;
+    }
+    
+.content > .content-inner.content-open {
+    -webkit-transform: translate3d(-100%, 0, 0);
+    transform: translate3d(-100%, 0, 0);
+}
 
 .content-back {
     display: inline-block;

@@ -167,8 +167,6 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                 }
 
                 saveTimeout = $timeout(function () {
-                    curr.saving = true;
-
                     api.note.saveNote({
                         Id: curr.Id,
                         Content: curr.Content
@@ -186,9 +184,14 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                             }
                             $scope.notes.splice(0, 0, curr);
                         }
+
+                        curr.saved = true;
+                        $timeout(function() {
+                            curr.saved = false;
+                        }, 2000);
+
                     }, ensureAuth, function () {
                         saveTimeout = null;
-                        curr.saving = false;
                     });
                 }, 1000);
             };
