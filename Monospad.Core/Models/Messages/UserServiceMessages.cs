@@ -1,6 +1,6 @@
 ﻿using System;
 using Monospad.Core.Exceptions;
-using TagKid.Framework.Validation;
+using Taga.Framework.Validation;
 
 namespace Monospad.Core.Models.Messages
 {

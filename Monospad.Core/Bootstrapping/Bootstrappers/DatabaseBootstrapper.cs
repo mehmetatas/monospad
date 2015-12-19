@@ -1,6 +1,7 @@
-﻿using DummyOrm.Db;
-using TagKid.Framework.IoC;
+﻿using Taga.Orm.Db;
+using Taga.Framework.IoC;
 using Monospad.Core.Models.Database;
+using Taga.Orm.Providers.SqlServer2012;
 
 namespace Monospad.Core.Bootstrapping.Bootstrappers
 {
@@ -15,13 +16,11 @@ namespace Monospad.Core.Bootstrapping.Bootstrappers
 
         private static IDbFactory InitTableMappings()
         {
-            return Db.Setup(new MonospadDbProvider())
-
+            return Db.Setup(SqlServer2012Provider.FromConnectionStringName("monospad"))
                 // Tables
                 .Table<User>()
                 .Table<Note>()
                 .Table<Login>()
-
                 // Build
                 .BuildFactory();
         }

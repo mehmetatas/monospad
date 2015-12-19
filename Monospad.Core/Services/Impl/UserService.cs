@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using DummyOrm.Db;
+using Taga.Orm.Db;
 using Monospad.Core.Exceptions;
 using Monospad.Core.Models.Database;
 using Monospad.Core.Models.Messages;
 using Monospad.Core.Providers;
-using TagKid.Framework.Hosting;
-using TagKid.Framework.UnitOfWork;
-using TagKid.Framework.Owin;
+using Taga.Framework.Hosting;
+using Taga.Orm.UnitOfWork;
 
 namespace Monospad.Core.Services.Impl
 {

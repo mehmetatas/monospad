@@ -1,8 +1,7 @@
-﻿using TagKid.Framework.Hosting;
-using TagKid.Framework.IoC;
-using TagKid.Framework.UnitOfWork;
-using TagKid.Framework.Owin;
-using TagKid.Framework.Owin.Configuration;
+﻿using Taga.Framework.Hosting;
+using Taga.Framework.Hosting.Configuration;
+using Taga.Framework.IoC;
+using Taga.Orm.UnitOfWork;
 
 namespace Monospad.Core.Services.Interceptors
 {
@@ -23,27 +22,18 @@ namespace Monospad.Core.Services.Interceptors
 
         public void AfterCall(RouteContext ctx)
         {
-            if (_uow != null)
-            {
-                _uow.Commit();
-            }
+            _uow?.Commit();
         }
 
         public object OnException(RouteContext ctx)
         {
-            if (_uow != null)
-            {
-                _uow.Rollback();
-            }
+            _uow?.Rollback();
             return null;
         }
 
         public void Dispose()
         {
-            if (_uow != null)
-            {
-                _uow.Dispose();
-            }
+            _uow?.Dispose();
         }
     }
 }

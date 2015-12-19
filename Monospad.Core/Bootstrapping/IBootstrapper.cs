@@ -1,4 +1,4 @@
-﻿using TagKid.Framework.IoC;
+﻿using Taga.Framework.IoC;
 
 namespace Monospad.Core.Bootstrapping
 {

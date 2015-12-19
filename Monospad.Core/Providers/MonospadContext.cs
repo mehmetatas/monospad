@@ -1,5 +1,5 @@
-﻿using Monospad.Core.Models.Database;
-using TagKid.Framework.Context;
+﻿using System.Runtime.Remoting.Messaging;
+using Monospad.Core.Models.Database;
 
 namespace Monospad.Core.Providers
 {
@@ -13,11 +13,12 @@ namespace Monospad.Core.Providers
         {
             get
             {
-                var ctx = CallContext.Current["MonospadContext"] as MonospadContext;
+                // TODO: Make sure consistency and thread safety of CallContext
+                var ctx = CallContext.GetData("MonospadContext") as MonospadContext;
                 if (ctx == null)
                 {
                     ctx = new MonospadContext();
-                    CallContext.Current["MonospadContext"] = ctx;
+                    CallContext.SetData("MonospadContext", ctx);
                 }
                 return ctx;
             }

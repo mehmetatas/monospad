@@ -1,5 +1,5 @@
 ﻿using Monospad.Core.Models.Messages;
-using TagKid.Framework.Hosting;
+using Taga.Framework.Hosting;
 
 namespace Monospad.Core.Services
 {
@@ -8,6 +8,5 @@ namespace Monospad.Core.Services
         Response DeleteNote(DeleteNoteRequest request);
         Response SaveNote(SaveNoteRequest request);
         Response GetContent(GetContentRequest request);
-        Response GetNote(GetNoteRequest request);
     }
 }

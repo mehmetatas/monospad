@@ -60,9 +60,12 @@
     <Content Include="app\css\style.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="app\html\app.html" />
+    <Content Include="app\html\recover.html" />
     <Content Include="app\js\app.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="app\lib\angular-route.min.js" />
     <Content Include="app\lib\angular.min.js" />
     <Content Include="app\lib\ngStorage.min.js" />
     <Content Include="index.html">
@@ -79,7 +82,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

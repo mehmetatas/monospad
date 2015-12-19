@@ -1,5 +1,4 @@
-﻿using System;
-using TagKid.Framework.Exceptions;
+﻿using Taga.Framework.Exceptions;
 
 namespace Monospad.Core.Exceptions
 {

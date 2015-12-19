@@ -1,7 +1,8 @@
-﻿using Monospad.Core.Models.Messages;
+﻿using System;
+using System.Reflection;
 using Monospad.Core.Services;
-using TagKid.Framework.IoC;
-using TagKid.Framework.Owin.Configuration;
+using Taga.Framework.Hosting.Configuration;
+using Taga.Framework.IoC;
 
 namespace Monospad.Core.Bootstrapping.Bootstrappers
 {
@@ -9,33 +10,48 @@ namespace Monospad.Core.Bootstrapping.Bootstrappers
     {
         public void Bootstrap(IDependencyContainer container)
         {
-            var builder = ServiceConfig.Builder();
-
-            BuildNoteService(builder);
-            BuildUserService(builder);
-
-            builder.Build();
+            container.Resolve<IServiceConfigBuilder>()
+                .Register<INoteService>()
+                .Register<IUserService>();
         }
+    }
 
-        private void BuildNoteService(ControllerConfigurator builder)
+    public class MonospadRouteProvider : IServiceRouteProvider
+    {
+        public string GetServiceRouteName(Type type)
         {
-            builder.ControllerFor<INoteService>("note")
-                .ActionFor(s => s.SaveNote(default(SaveNoteRequest)), "save", HttpMethod.Post)
-                .ActionFor(s => s.GetContent(default(GetContentRequest)), "getContent", HttpMethod.Get)
-                .ActionFor(s => s.GetNote(default(GetNoteRequest)), "getNote", HttpMethod.Get)
-                .ActionFor(s => s.DeleteNote(default(DeleteNoteRequest)), "delete", HttpMethod.Post);
+            return ToCamelCase(type.Name
+                .Substring(0, type.Name.Length - "Service".Length)
+                .Substring(1));
         }
 
-        private void BuildUserService(ControllerConfigurator builder)
+        public HttpMethod GetHttpMethod(MethodInfo method)
         {
-            builder.ControllerFor<IUserService>("user")
-                .ActionFor(s => s.Signup(default(SignupRequest)), "signup", HttpMethod.Post).NoAuth()
-                .ActionFor(s => s.Signin(default(SigninRequest)), "signin", HttpMethod.Post).NoAuth()
-                .ActionFor(s => s.SigninWithToken(default(SigninWithTokenRequest)), "signinWithToken", HttpMethod.Post).NoAuth()
-                .ActionFor(s => s.RecoverPassword(default(RecoverPasswordRequest)), "recoverPassword", HttpMethod.Post).NoAuth()
-                .ActionFor(s => s.ResetPassword(default(ResetPasswordRequest)), "resetPassword", HttpMethod.Post).NoAuth()
-                .ActionFor(s => s.ChangePassword(default(ChangePasswordRequest)), "changePassword", HttpMethod.Post)
-                .ActionFor(s => s.Signout(default(SignoutRequest)), "signout", HttpMethod.Post);
+            if (method.Name.StartsWith("Get"))
+            {
+                return HttpMethod.Get;
+            }
+            return HttpMethod.Post;
         }
+
+        public string GetMethodRoute(MethodInfo method)
+        {
+            return ToCamelCase(method.Name);
+        }
+
+        public bool IsNoAuth(MethodInfo method)
+        {
+            return method.GetCustomAttribute<NoAuthAttribute>() != null;
+        }
+
+        private string ToCamelCase(string name)
+        {
+            return char.ToLowerInvariant(name[0]) + name.Substring(1);
+        }
+    }
+
+    public class NoAuthAttribute : Attribute
+    {
+
     }
 }

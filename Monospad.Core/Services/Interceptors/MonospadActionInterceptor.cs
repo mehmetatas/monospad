@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using TagKid.Framework.Hosting;
+using Taga.Framework.Hosting;
 
 namespace Monospad.Core.Services.Interceptors
 {

@@ -1,8 +1,8 @@
 ﻿using Monospad.Core.Bootstrapping.Bootstrappers;
 using Monospad.Core.Models.Messages;
-using TagKid.Framework.IoC;
-using TagKid.Framework.IoC.Castle;
-using TagKid.Framework.Validation;
+using Taga.Framework.IoC;
+using Taga.Framework.IoC.Castle;
+using Taga.Framework.Validation;
 
 namespace Monospad.Core.Bootstrapping
 {

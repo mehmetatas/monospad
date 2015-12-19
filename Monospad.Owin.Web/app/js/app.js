@@ -142,7 +142,7 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                     $timeout.cancel(saveTimeout);
                     saveTimeout = null;
 
-                    api.note.save({
+                    api.note.saveNote({
                         Id: curr.Id,
                         Content: curr.Content
                     });
@@ -159,7 +159,7 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                 saveTimeout = $timeout(function () {
                     curr.saving = true;
 
-                    api.note.save({
+                    api.note.saveNote({
                         Id: curr.Id,
                         Content: curr.Content
                     }, function (resp) {
@@ -272,7 +272,7 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                     return;
                 }
 
-                api.note.delete({ Id: n.Id }, function () {
+                api.note.deleteNote({ Id: n.Id }, function () {
                     var i = $scope.notes.indexOf(n);
 
                     if (i > -1) {
@@ -469,7 +469,7 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
     })
     .service("api", [
         "$rootScope", "$http", "clientData", function ($rootScope, $http, clientData) {
-            var send = function (method, controller, action, data, success, error, complete, block) {
+            var send = function (method, controller, action, data, success, error, complete) {
                 var token = clientData.token();
 
                 var opts = {
@@ -486,11 +486,8 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                     opts.data = data;
                 }
 
-                $rootScope.blocker.block = block;
-
                 return $http(opts)
                     .success(function (resp) {
-                        $rootScope.blocker.block = false;
                         if (resp.ResponseCode === 0 && success) {
                             success(resp);
                         } else if (resp.ResponseCode !== 0) {
@@ -502,7 +499,6 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
                         }
                     })
                     .error(function () {
-                        $rootScope.blocker.block = false;
                         if (error) {
                             error({
                                 ResponseCode: -1,
@@ -529,22 +525,16 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
 
                     var value = serviceDef[prop];
 
-                    if (prop === "GET" || prop === "POST") {
+                    if (prop === "GET" || prop === "POST" || prop === "DELETE" || prop === "PUT") {
                         var methods = value.split(",");
                         for (var i = 0; i < methods.length; i++) {
                             var methodName = methods[i];
-                            var block = false;
 
-                            if (methodName.indexOf("_") === 0) {
-                                block = true;
-                                methodName = methodName.substring(1);
-                            }
-
-                            service[methodName] = (function (p, m, b) {
+                            service[methodName] = (function (p, m) {
                                 return function (data, success, error, complete) {
-                                    send(p, serviceName, m, data, success, error, complete, b);
+                                    send(p, serviceName, m, data, success, error, complete);
                                 };
-                            })(prop, methodName, block);
+                            })(prop, methodName);
                         }
                     }
                 }

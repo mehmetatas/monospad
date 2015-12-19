@@ -1,6 +1,6 @@
 using Monospad.Core.Providers;
-using TagKid.Framework.Exceptions;
-using TagKid.Framework.Hosting;
+using Taga.Framework.Exceptions;
+using Taga.Framework.Hosting;
 
 namespace Monospad.Core.Services.Interceptors
 {

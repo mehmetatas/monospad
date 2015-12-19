@@ -1,9 +1,9 @@
-﻿using DummyOrm.Db;
+﻿using Taga.Orm.Db;
 using System;
 using Monospad.Core.Exceptions;
 using Monospad.Core.Models.Database;
-using TagKid.Framework.Hosting;
-using TagKid.Framework.UnitOfWork;
+using Taga.Framework.Hosting;
+using Taga.Orm.UnitOfWork;
 
 namespace Monospad.Core.Providers.Impl
 {
