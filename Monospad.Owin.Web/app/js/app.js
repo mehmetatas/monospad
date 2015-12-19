@@ -304,7 +304,7 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
             };
 
             $scope.shareNote = function (n) {
-                prompt("share url", "https://monospad.com/note/" + n.AccessToken);
+                prompt("copy url", "https://monospad.com/note/" + n.AccessToken);
             };
 
             $scope.$watch("current.Content", function () {

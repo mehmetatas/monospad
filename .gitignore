@@ -223,6 +223,5 @@ pip-log.txt
 .mr.developer.cfg
 
 Web*.config
-deploy
 deploy-owin
-deploy-owin-selfhost
+logs/

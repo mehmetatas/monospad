@@ -10,6 +10,8 @@ using Taga.Framework.Hosting.Owin;
 using Taga.Framework.IoC;
 using Taga.Framework.Json;
 using Taga.Framework.Json.Newtonsoft;
+using Taga.Framework.Logging;
+using Taga.Framework.Logging.Impl;
 using Taga.Orm.UnitOfWork;
 using Taga.Orm.UnitOfWork.Impl;
 
@@ -27,6 +29,7 @@ namespace Monospad.Core.Bootstrapping.Bootstrappers
             container.RegisterSingleton<IActionInvoker, ActionInvoker>();
             container.RegisterSingleton<IOwinHandler, GenericOwinHandler>();
             container.RegisterSingleton<IServiceConfigBuilder, ServiceConfigBuilder>();
+            container.RegisterSingleton<ILogger, SimpleLogger>();
 
             // Database
             container.RegisterTransient<IUnitOfWork, UnitOfWork>();
