@@ -13,6 +13,6 @@ namespace Monospad.Core.Services
         Response GetContent(GetContentRequest request);
 
         [NoAuth]
-        Response GetNoteByAccessCode(GetNoteByAccessCodeRequest request);
+        Response GetNoteByAccessToken(GetNoteByAccessTokenRequest request);
     }
 }

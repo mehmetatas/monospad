@@ -1,6 +1,6 @@
 ﻿var serviceDefs = {
     "note": {
-        "GET": "getContent,getNote,getNoteByAccessCode",
+        "GET": "getContent,getNote,getNoteByAccessToken",
         "POST": "saveNote,deleteNote"
     },
     "user": {

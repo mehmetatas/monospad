@@ -1,4 +1,5 @@
-﻿using Taga.Orm.Db;
+﻿using Monospad.Core.Exceptions;
+using Taga.Orm.Db;
 using Monospad.Core.Models.Database;
 using Monospad.Core.Models.Messages;
 using Monospad.Core.Providers;
@@ -49,16 +50,18 @@ namespace Monospad.Core.Services.Impl
             return Response.Success.WithData(note.ToItem());
         }
 
-        public Response GetNoteByAccessCode(GetNoteByAccessCodeRequest request)
+        public Response GetNoteByAccessToken(GetNoteByAccessTokenRequest request)
         {
             var note = _repository.Select<Note>()
                 .Include(n => n.Content)
-                .FirstOrDefault(n => n.AccessToken == request.AccessCode);
+                .FirstOrDefault(n => n.AccessToken == request.AccessToken);
 
-            return Response.Success.WithData(new
-            {
-                note.Content
-            });
+            return note == null
+                ? Response.Error(Errors.Note_NotFound)
+                : Response.Success.WithData(new
+                {
+                    note.Content
+                });
         }
     }
 }

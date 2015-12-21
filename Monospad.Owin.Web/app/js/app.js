@@ -237,6 +237,7 @@ angular.module("monospad", ["ngStorage", "ngRoute", "angular-loading-bar"])
                         curr.Id = data.Id;
                         curr.Title = data.Title;
                         curr.Summary = data.Summary;
+                        curr.AccessToken = data.AccessToken;
 
                         if ($scope.notes.indexOf(curr) < 0) {
                             if (!$scope.current) {
@@ -640,13 +641,18 @@ angular.module("monospad", ["ngStorage", "ngRoute", "angular-loading-bar"])
 
 	    clientData.token(null);
 	}])
-	.controller("noteCtrl", ["$scope", "$rootScope", "$location", "$routeParams", "api", "clientData", "block", function ($scope, $rootScope, $location, $routeParams, api, clientData, block) {
+	.controller("noteCtrl", ["$scope", "$rootScope", "$location", "$routeParams", "api", "block", function ($scope, $rootScope, $location, $routeParams, api, block) {
 	    $rootScope.blocker = {};
 
 	    block(
-            api.note.getNoteByAccessCode({ AccessCode: $routeParams.token },
+            api.note.getNoteByAccessToken({ AccessToken: $routeParams.token },
                 function (resp) {
                     $scope.content = resp.Data.Content;
+                }, function (resp) {
+                    if (resp && resp.ResponseMessage) {
+                        alert(resp.ResponseMessage + " [" + resp.ResponseCode + "]");
+                    }
+                    $location.url("/");
                 })
         );
 	}])

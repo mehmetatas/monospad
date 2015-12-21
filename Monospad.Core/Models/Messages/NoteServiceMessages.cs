@@ -18,8 +18,8 @@ namespace Monospad.Core.Models.Messages
         public long Id { get; set; }
     }
 
-    public class GetNoteByAccessCodeRequest
+    public class GetNoteByAccessTokenRequest
     {
-        public Guid AccessCode { get; set; }
+        public Guid AccessToken { get; set; }
     }
 }

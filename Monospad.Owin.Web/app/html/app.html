@@ -55,8 +55,10 @@
                         <span class="note-title" ng-bind="note.Title || '[empty]'"></span>
                         <div class="note-summary" ng-bind="note.Summary"></div>
                         <div class="note-footer">
-                            <a class="btn" ng-click="shareNote(note); $event.stopPropagation();">share</a>
-                            |
+                            <span ng-show="note.AccessToken">
+                                <a class="btn" ng-click="shareNote(note); $event.stopPropagation();">share</a>
+                                |
+                            </span>
                             <a class="btn" ng-click="deleteNote(note); $event.stopPropagation();">delete</a>
                         </div>
                     </div>
