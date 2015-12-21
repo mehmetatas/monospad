@@ -54,6 +54,9 @@ a, a:hover, a:visited {
     height: 40px;
     background-color: #319fe9;
     width: 100%;
+    -webkit-box-shadow: 0 0 5px #888;
+    -ms-box-shadow: 0 0 5px #888;
+    box-shadow: 0 0 5px #888;
 }
 
     .header a {

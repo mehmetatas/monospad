@@ -1,5 +1,7 @@
-angular.module("monospad", ["ngStorage", "ngRoute"])
-	.config(["$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
+angular.module("monospad", ["ngStorage", "ngRoute", "angular-loading-bar"])
+	.config(["$routeProvider", "$locationProvider", "cfpLoadingBarProvider", function ($routeProvider, $locationProvider, cfpLoadingBarProvider) {
+	    cfpLoadingBarProvider.includeSpinner = false;
+
 	    $locationProvider.html5Mode(true);
 
 	    $routeProvider
@@ -444,7 +446,7 @@ angular.module("monospad", ["ngStorage", "ngRoute"])
             var editor = document.getElementById("editor");
 
             var downTimeout;
-            var touchStartTime;
+            //var touchStartTime;
 
             var getUrl = function (txt) {
                 var start = txt.selectionStart;

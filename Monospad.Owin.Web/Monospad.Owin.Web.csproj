@@ -57,6 +57,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\css\loading-bar.css" />
     <Content Include="app\css\style.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -68,6 +69,7 @@
     </Content>
     <Content Include="app\lib\angular-route.min.js" />
     <Content Include="app\lib\angular.min.js" />
+    <Content Include="app\lib\loading-bar.min.js" />
     <Content Include="app\lib\ngStorage.min.js" />
     <Content Include="index.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
