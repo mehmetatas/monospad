@@ -41,7 +41,28 @@ a, a:hover, a:visited {
     width: 100%;
     height: 100%;
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.1);
+    background: transparent;
+}
+
+#loading-bar {
+  pointer-events: none;
+  -webkit-pointer-events: none;
+}
+
+#loading-bar .bar {
+  background: #9d2;
+  position: fixed;
+  z-index: 50;
+  top: 40px;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  border-bottom-right-radius: 1px;
+  border-top-right-radius: 1px;
+  -moz-box-shadow: #9d2 1px 0 6px 1px;
+  -ms-box-shadow: #9d2 1px 0 6px 1px;
+  -webkit-box-shadow: #9d2 1px 0 6px 1px;
+  box-shadow: #9d2 1px 0 6px 1px;
 }
 
 .app {
@@ -284,10 +305,10 @@ textarea {
     color: #fff;
     font-size: 1.2em;
     font-weight: 600;
-    background-color: #319fe9;
-    -webkit-box-shadow: 0 0 5px #08f;
-    -ms-box-shadow: 0 0 5px #08f;
-    box-shadow: 0 0 5px #08f;
+    background-color: #9d2;
+    -webkit-box-shadow: 0 0 5px #9d2;
+    -ms-box-shadow: 0 0 5px #9d2;
+    box-shadow: 0 0 5px #9d2;
     z-index: 10;
     opacity: 0;
     -webkit-transition: all .5s ease-in-out;
