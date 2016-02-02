@@ -17,10 +17,11 @@ namespace Monospad.Core.Services
 
         [NoAuth]
         Response RecoverPassword(RecoverPasswordRequest request);
-        
-        Response Signout(SignoutRequest request);
 
+        [NoAuth]
         Response ResetPassword(ResetPasswordRequest request);
+
+        Response Signout(SignoutRequest request);
 
         Response ChangePassword(ChangePasswordRequest request);
     }
