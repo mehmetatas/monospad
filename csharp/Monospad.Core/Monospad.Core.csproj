@@ -94,11 +94,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\taga\Taga\Taga.Framework\Taga.Framework.csproj">
+    <ProjectReference Include="..\..\..\taga\Taga\Taga.Framework\Taga.Framework.csproj">
       <Project>{f0bf733a-2316-45ed-bdf9-ad2537fb654c}</Project>
       <Name>Taga.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\taga\Taga\Taga.Orm\Taga.Orm.csproj">
+    <ProjectReference Include="..\..\..\taga\Taga\Taga.Orm\Taga.Orm.csproj">
       <Project>{80b584a0-fff0-4d80-a922-2a73c8843b56}</Project>
       <Name>Taga.Orm</Name>
     </ProjectReference>

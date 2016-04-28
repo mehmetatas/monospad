@@ -7,9 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monospad.Core", "Monospad.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monospad.Owin.Web", "Monospad.Owin.Web\Monospad.Owin.Web.csproj", "{9A55C8F3-A083-45CC-B0A3-5A73A514A73C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taga.Orm", "..\taga\Taga\Taga.Orm\Taga.Orm.csproj", "{80B584A0-FFF0-4D80-A922-2A73C8843B56}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taga.Orm", "..\..\taga\Taga\Taga.Orm\Taga.Orm.csproj", "{80B584A0-FFF0-4D80-A922-2A73C8843B56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taga.Framework", "..\taga\Taga\Taga.Framework\Taga.Framework.csproj", "{F0BF733A-2316-45ED-BDF9-AD2537FB654C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Taga.Framework", "..\..\taga\Taga\Taga.Framework\Taga.Framework.csproj", "{F0BF733A-2316-45ED-BDF9-AD2537FB654C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
