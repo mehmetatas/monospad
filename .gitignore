@@ -222,6 +222,27 @@ pip-log.txt
 #Mr Developer
 .mr.developer.cfg
 
+# Eclipse
+.classpath
+.project
+.settings/
+ 
+# Intellij
+.idea/
+*.iml
+*.iws
+out/
+ 
+# Mac
+.DS_Store
+ 
+# Maven
+log/
+target/
+mvnw*
+.mvn/
+
+
 Web*.config
 deploy-owin
 logs/
