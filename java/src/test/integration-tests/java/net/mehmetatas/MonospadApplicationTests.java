@@ -13,6 +13,6 @@ public class MonospadApplicationTests {
 
 	@Test
 	public void contextLoads() {
-	}
 
+	}
 }
