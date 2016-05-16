@@ -1,10 +1,7 @@
 package net.mehmetatas.controllers.dto.messages;
 
-import net.mehmetatas.controllers.dto.models.NoteSummary;
+import net.mehmetatas.entities.views.NoteSummary;
 import net.mehmetatas.entities.Login;
-import net.mehmetatas.entities.Note;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.util.UUID;
 

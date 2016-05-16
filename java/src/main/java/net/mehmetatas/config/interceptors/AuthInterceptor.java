@@ -1,6 +1,7 @@
 package net.mehmetatas.config.interceptors;
 
 import net.mehmetatas.config.annotations.NoAuth;
+import net.mehmetatas.context.RequestContext;
 import net.mehmetatas.entities.Login;
 import net.mehmetatas.repositories.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         Login login = loginRepo.findByTokenAndIsPasswordRecoveryFalse(token);
 
         if (login == null) {
-            httpServletResponse.sendError(HttpStatus.UNAUTHORIZED.value(), "Authentication token required!");
+            httpServletResponse.sendError(HttpStatus.UNAUTHORIZED.value(), "Invalid authentication token!");
             return false;
         }
 
@@ -61,6 +62,8 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 
         login.extend();
         loginRepo.save(login);
+
+        RequestContext.current().init(login);
 
         return true;
     }

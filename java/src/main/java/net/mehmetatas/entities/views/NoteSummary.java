@@ -1,4 +1,4 @@
-package net.mehmetatas.controllers.dto.models;
+package net.mehmetatas.entities.views;
 
 import net.mehmetatas.entities.Note;
 
@@ -12,6 +12,13 @@ public class NoteSummary {
     public String title;
     public String summary;
     public UUID accessToken;
+
+    public NoteSummary(long id, String title, String summary, UUID accessToken) {
+        this.id = id;
+        this.title = title;
+        this.summary = summary;
+        this.accessToken = accessToken;
+    }
 
     public NoteSummary(Note note) {
         id = note.getId();

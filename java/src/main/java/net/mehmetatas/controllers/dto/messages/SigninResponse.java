@@ -1,8 +1,9 @@
 package net.mehmetatas.controllers.dto.messages;
 
-import net.mehmetatas.controllers.dto.models.NoteSummary;
+import net.mehmetatas.entities.views.NoteSummary;
 import net.mehmetatas.entities.Login;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -11,7 +12,7 @@ import java.util.UUID;
 public class SigninResponse {
     public UUID loginToken;
     public long userId;
-    public NoteSummary note;
+    public List<NoteSummary> notes;
 
     public SigninResponse(Login login) {
         loginToken = login.getToken();
